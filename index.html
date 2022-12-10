@@ -1,0 +1,68 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <style>
+    input{
+      width: 80px;
+      height:80px;
+      font-size: 80px;
+      text-align: center;
+    }
+  </style>
+
+  <input class="input">
+  <input class="input">
+  <input class="input">
+  <input class="input">
+  <input class="input">
+  <button>submit</button>
+
+
+
+  <script>
+
+      let answer = 'flash';
+      document.querySelector('button').addEventListener('click',
+      function(){
+        
+        let input = document.querySelectorAll('.input');
+        for(let i = 0; i < input.length; i++){
+          if(input[i].value == answer){
+            input[i].style.background = 'green';
+          }
+          else if(answer.includes(input[i].value)){
+            input[i].style.background = 'yellow';
+          }
+          else{
+            input[i].style.background = 'grey';
+          }
+          input[i].classList.remove('input');
+        }
+
+        let template = `<div>
+          <input class="input">
+          <input class="input">
+          <input class="input">
+          <input class="input">
+          <input class="input">
+          </div>`;
+
+
+          document.querySelector('body').insertAdjacentHTML('beforeend',template);
+      })
+
+  </script>
+</body>
+</html>
