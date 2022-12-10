@@ -13,6 +13,11 @@
 </head>
 <body>
   
+
+  <div>
+    <span id="warning_message">Wordle</span>
+  </div>
+
   <style>
     input{
       width: 80px;
@@ -22,46 +27,82 @@
     }
   </style>
 
-  <input class="input">
-  <input class="input">
-  <input class="input">
-  <input class="input">
-  <input class="input">
+  <input class="input" maxlength="1">
+  <input class="input" maxlength="1">
+  <input class="input" maxlength="1">
+  <input class="input" maxlength="1">
+  <input class="input" maxlength="1">
+  
   <button>submit</button>
 
 
 
   <script>
 
-      let answer = 'flash';
+      const answer = 'flash';
+      const answer_array = ['f','l','a','s','h'];
       document.querySelector('button').addEventListener('click',
       function(){
-        
+       
         let input = document.querySelectorAll('.input');
+        let empty = giveColor(input, answer);
+        const message = document.getElementById("warning_message");
+       
+        if(empty){
+          message.innerText = "Empty spaces";
+        }
+        if(compare(input, answer)){
+          message.innerText = "Victory";
+          return
+        }
+        else{
+          message.innerText = "Wordle";
+          let template = `<div>
+           <input class="input" maxlength="1">
+            <input class="input" maxlength="1">
+           <input class="input" maxlength="1">
+           <input class="input" maxlength="1">
+           <input class="input" maxlength="1">
+           </div>`;
+           document.querySelector('body').insertAdjacentHTML('beforeend',template);
+        }
+      })
+
+      giveColor = function(input, answer){
+        let empty = false;
         for(let i = 0; i < input.length; i++){
-          if(input[i].value == answer){
+          
+          if(input[i].value == ""){
+            empty = true;
+          }
+          else if(input[i].value == answer[i]){
             input[i].style.background = 'green';
           }
-          else if(answer.includes(input[i].value)){
+          else if(answer.includes(input[i].value) && input[i].value !== ""){
             input[i].style.background = 'yellow';
           }
           else{
             input[i].style.background = 'grey';
           }
-          input[i].classList.remove('input');
+        }
+        if(!empty){
+          input.forEach(each => each.classList.remove("input"));
         }
 
-        let template = `<div>
-          <input class="input">
-          <input class="input">
-          <input class="input">
-          <input class="input">
-          <input class="input">
-          </div>`;
+        return empty;
+      }
 
 
-          document.querySelector('body').insertAdjacentHTML('beforeend',template);
-      })
+      compare = function(input, answer){
+        for(let i = 0; i < answer.length;i++){
+          if(input[i].value !== answer[i]){
+            return false;
+          }
+        }
+        return true;
+      }
+
+
 
   </script>
 </body>
